@@ -13,7 +13,26 @@ module.exports = class UserController {
             pwd
         }
 
-        userStatus = await UserBusiness.CheckRegister(user)
+        userStatus = await UserBusiness.UserRegister(user)
+
+        switch(userStatus.status) {
+            case 200:
+                return res.status(200).json({message: userStatus.msg})
+            default :
+                return res.status(userStatus.status).json({error: userStatus.msg})
+        }
+    }
+
+    static async UserLogin(req, res) {
+
+        let userStatus = new EndMsg("", "")
+        const {email, pwd} = req.body
+        let user = {
+            email,
+            pwd
+        }
+
+        userStatus = await UserBusiness.UserLogin(user)
 
         switch(userStatus.status) {
             case 200:
