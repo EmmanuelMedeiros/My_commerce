@@ -2,6 +2,7 @@ const EndMsg = require('../models/EndMsg')
 const User = require('../models/User')
 const UserRepository = require('../repository/UserRepository')
 const bcrypt = require('bcrypt')
+const CreateUserToken = require('../commons/CreateUserToken')
 
 module.exports = class UserBusiness {
 
@@ -33,7 +34,10 @@ module.exports = class UserBusiness {
     static async UserLogin(user) {
 
         let credentialsVerify = new EndMsg
-        let userStatus = new EndMsg
+        let pwdVerify   
+        let myUser
+        let userToken
+        const encrypt = await bcrypt.genSalt(10)
 
         credentialsVerify = await this.EmailAndPwdVerify(user)
 
@@ -41,9 +45,21 @@ module.exports = class UserBusiness {
             return credentialsVerify
         }
 
-        userStatus = await UserRepository.GetUser(user)
+        myUser = await UserRepository.GetUserByEmail(user)
 
-        return userStatus
+        if(myUser == null) {
+            return new EndMsg(400, "User not found")
+        }
+
+        pwdVerify = await bcrypt.compareSync(user.pwd, myUser.password)
+
+        if (!pwdVerify) {
+            return new EndMsg(400, "Password does not match")
+        }
+
+        userToken = await CreateUserToken(myUser)
+
+        return new EndMsg(200, userToken)
         
     }
 
@@ -59,4 +75,5 @@ module.exports = class UserBusiness {
 
         return new EndMsg(200, "Sucess")
     }
+
 }

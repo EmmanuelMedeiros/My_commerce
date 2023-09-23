@@ -8,10 +8,7 @@ module.exports = class UserController {
 
         let userStatus = new EndMsg("", "")
         const {email, pwd} = req.body
-        let user = {
-            email,
-            pwd
-        }
+        let user = {email , pwd}
 
         userStatus = await UserBusiness.UserRegister(user)
 
@@ -27,10 +24,7 @@ module.exports = class UserController {
 
         let userStatus = new EndMsg("", "")
         const {email, pwd} = req.body
-        let user = {
-            email,
-            pwd
-        }
+        let user = {email, pwd}
 
         userStatus = await UserBusiness.UserLogin(user)
 

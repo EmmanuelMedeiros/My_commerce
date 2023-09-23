@@ -18,20 +18,16 @@ module.exports = class UserRepository {
 
     }
 
-    static async GetUser(user) {
-        const myUser = user
-        let userFound 
+    static async GetUserByEmail(user) {
+        
+        const userEmail = user.email
+        let emailExists 
 
+        console.log(userEmail)
         try {
-            userFound = await User.findOne({email: user.email, password: user.pwd})
-            
-            if(!userFound) {
-                return new EndMsg(400, "User not found!")
-            } else {
-                return  new EndMsg(200, myUser)
-            }
-        }
-        catch(err){ 
+            emailExists = await User.findOne({email: userEmail})
+            return emailExists
+        }catch(err){
             console.log(err)
             return new EndMsg(500, err)
         }
