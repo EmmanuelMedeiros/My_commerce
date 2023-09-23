@@ -24,14 +24,14 @@ module.exports = class UserController {
 
         let userStatus = new EndMsg("", "")
         const {email, pwd} = req.body
-        let user = {email, pwd}
+        let user = {email , pwd}
 
         userStatus = await UserBusiness.UserLogin(user)
 
         switch(userStatus.status) {
             case 200:
                 return res.status(200).json({message: userStatus.msg})
-            default :
+            default:
                 return res.status(userStatus.status).json({error: userStatus.msg})
         }
     }
