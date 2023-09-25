@@ -76,4 +76,18 @@ module.exports = class UserBusiness {
         return new EndMsg(200, "Sucess")
     }
 
+    static async GetUserById(userId) {
+
+        let userById
+
+        if(userId == undefined) {
+            return new EndMsg(400, 'Invalid ID')
+        }
+        
+        userById = await UserRepository.GetUserById(userId)
+
+        return userById
+        
+    }
+
 }

@@ -32,4 +32,22 @@ module.exports = class UserRepository {
             return new EndMsg(500, err)
         }
     }
+
+    static async GetUserById(userId) {
+
+        let myUser 
+
+        try {
+            myUser = await User.findById(userId).select('-password')
+            if(myUser == null) {
+                return new EndMsg(404, 'User not found')
+            }else {
+                return new EndMsg(200, myUser)
+            }
+
+        }catch(err) {
+            console.log(err)
+            return new EndMsg(500, err)
+        }
+    }
 }

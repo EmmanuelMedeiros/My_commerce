@@ -36,4 +36,20 @@ module.exports = class UserController {
         }
     }
 
+    static async GetUserByid(req, res) {
+
+        const id = req.params.id
+        let userStatus = new EndMsg("", "")
+
+        userStatus = await UserBusiness.GetUserById(id)
+
+        switch(userStatus.status) {
+            case 200:
+                return res.status(200).json({message: userStatus.msg})
+            default:
+                return res.status(userStatus.status).json({error: userStatus.msg})
+        }
+
+    }
+
 }
