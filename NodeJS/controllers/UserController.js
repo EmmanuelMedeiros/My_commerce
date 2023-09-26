@@ -1,14 +1,15 @@
 const User = require('../models/User')
 const EndMsg = require('../models/EndMsg')
 const UserBusiness = require('../business/UserBusiness')
+const GetToken = require('../commons/GetToken')
 
 module.exports = class UserController {
 
     static async CreateUser(req, res) {
 
         let userStatus = new EndMsg("", "")
-        const {email, pwd} = req.body
-        let user = {email , pwd}
+        const {email, pwd, seller} = req.body
+        let user = {email , pwd, seller}
 
         userStatus = await UserBusiness.UserRegister(user)
 

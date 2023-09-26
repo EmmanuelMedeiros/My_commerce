@@ -23,7 +23,8 @@ module.exports = class UserBusiness {
         
         const newUser = new User({
             email: user.email,
-            password: encryptedPwd
+            password: encryptedPwd,
+            seller: user.seller
         })
 
         userStatus = await UserRepository.CreateUser(newUser)

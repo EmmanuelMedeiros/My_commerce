@@ -11,6 +11,10 @@ const User = mongoose.model(
         password: {
             type: String,
             required: true
+        },
+        seller: {
+            type: Boolean,
+            required: true
         }
     })
 )
