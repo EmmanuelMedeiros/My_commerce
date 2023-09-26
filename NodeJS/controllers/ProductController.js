@@ -1,9 +1,20 @@
 const ProductBusiness = require('../business/ProductBusiness')
+const EndMsg = require('../models/EndMsg')
 
 module.exports = class ProductController {
     
     static async CreateProduct(req, res) {
-        return res.status(200).json({message: "Entrou"})
+    
+        let productStatus = new EndMsg("", "")
+        const {title, description, value} = req.body
+        const product = {
+            title,
+            description,
+            value
+        }
+
+        
+
     }
 
 }
