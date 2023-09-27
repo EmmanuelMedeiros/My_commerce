@@ -4,8 +4,8 @@ const EndMsg = require('../models/EndMsg')
 async function CreateUserToken(user) {
 
     const token = jwt.sign({
-        name: user.name,
-        pwd: user.pwd
+        email: user.email,
+        id: user._id
     }, "commerce")
 
     return {

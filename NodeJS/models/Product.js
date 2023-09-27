@@ -17,6 +17,10 @@ const Product = mongoose.Model(
             type: Number,
             required: true,
         },
+        amount: {
+            type: Number,
+            required: true
+        },
         owner: {
             type: User,
             required: true
