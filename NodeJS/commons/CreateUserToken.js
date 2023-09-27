@@ -6,7 +6,7 @@ async function CreateUserToken(user) {
     const token = jwt.sign({
         email: user.email,
         id: user._id
-    }, "commerce")
+    }, "commerce", {expiresIn: 1200})
 
     return {
         msg: "Authenticated",

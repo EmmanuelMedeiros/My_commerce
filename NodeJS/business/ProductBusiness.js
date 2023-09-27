@@ -4,14 +4,10 @@ const GetUserByToken = require('../commons/GetUserByToken')
 module.exports = class ProductBusiness {
 
     static async CreateProduct(req, product) {
-        
-        console.log(!product.title)
 
         if(!product.title || !product.description || !product.amount || !product.value) {
             return new EndMsg(422, 'This field cannot be null')
         }
-
-        console.log("DADSA")
 
         const productOwner = await this.InsertProductOwner(req, product)
 
@@ -26,6 +22,8 @@ module.exports = class ProductBusiness {
     static async InsertProductOwner(req, product) {
 
         const productOwner = await GetUserByToken(req)
+
+        
 
         return productOwner
     }
