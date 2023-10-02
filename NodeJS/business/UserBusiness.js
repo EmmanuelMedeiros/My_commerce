@@ -6,17 +6,25 @@ const CreateUserToken = require('../commons/CreateUserToken')
 
 module.exports = class UserBusiness {
 
+
     static async UserRegister(user) {
         
         let credentialsVerify = new EndMsg
+        let userExists
         let userStatus 
         let encryptedPwd
         const encrypt = await bcrypt.genSalt(10)
 
         credentialsVerify = await this.EmailAndPwdVerify(user)
 
-        if (credentialsVerify.status == 400) {
+        if (credentialsVerify.status != 200) {
             return credentialsVerify
+        }
+
+        userExists = await this.UserExists(user.email)
+
+        if (userExists.status != 200 ) {
+            return userExists
         }
 
         encryptedPwd = await bcrypt.hash(user.pwd, encrypt)
@@ -32,13 +40,13 @@ module.exports = class UserBusiness {
         return userStatus
     }
 
+
     static async UserLogin(user) {
 
         let credentialsVerify = new EndMsg
         let pwdVerify   
         let myUser
         let userToken
-        const encrypt = await bcrypt.genSalt(10)
 
         credentialsVerify = await this.EmailAndPwdVerify(user)
 
@@ -63,6 +71,7 @@ module.exports = class UserBusiness {
         return new EndMsg(200, userToken)
         
     }
+    
 
     static async EmailAndPwdVerify(user) {
         
@@ -76,6 +85,7 @@ module.exports = class UserBusiness {
 
         return new EndMsg(200, "Sucess")
     }
+
 
     static async GetUserById(userId) {
 
@@ -91,4 +101,17 @@ module.exports = class UserBusiness {
         
     }
 
+
+    static async UserExists(userEmail) {
+
+        let userExists 
+
+        userExists = await UserRepository.UserExists(userEmail)
+
+        if(userExists) {
+            return new EndMsg(400, "User already exists")
+        }
+
+        return new EndMsg(200, userEmail)
+    }
 }

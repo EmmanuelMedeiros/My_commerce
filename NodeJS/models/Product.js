@@ -2,7 +2,7 @@ const mongoose = require('../db/coon')
 const User = require('./User')
 const { Schema } = mongoose
 
-const Product = mongoose.Model(
+const Product = mongoose.model(
     'Product',
     new Schema({
         title: {
@@ -22,7 +22,7 @@ const Product = mongoose.Model(
             required: true
         },
         owner: {
-            type: User,
+            type: Object,
             required: true
         }
     })

@@ -14,7 +14,7 @@ async function GetUserByToken(req) {
 
     try {
         validToken = jwt.verify(token, 'commerce')
-        currentUser = await User.findById(validToken.id)
+        currentUser = await User.findById(validToken.id).select('-password')
     }catch(err) {
         console.log(err)
         return null

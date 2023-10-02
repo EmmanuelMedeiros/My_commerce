@@ -14,8 +14,6 @@ module.exports = class ProductController {
             amount
         }
 
-        console.log("olá")
-
         productStatus = await ProductBusiness.CreateProduct(req, product)
 
         switch(productStatus.status) {

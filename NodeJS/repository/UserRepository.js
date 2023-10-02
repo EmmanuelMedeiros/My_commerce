@@ -50,4 +50,17 @@ module.exports = class UserRepository {
             return new EndMsg(500, err)
         }
     }
+
+    static async UserExists(userEmail) {
+        let user 
+
+        try {
+            user = await User.findOne({email: userEmail})
+            return user
+
+        }catch(err) {
+            console.log(err)
+            return new EndMsg(500, err)
+        }
+    }
 }
